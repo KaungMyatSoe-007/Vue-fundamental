@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditional Rendering and Computed Propreties</title>
+    <style>
+        ul{
+            list-style-type: none;
+        }
+        .done{
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- v-bind == : -->
+        <h1>{{ title }} ({{ totalItem }})</h1>
+        <form action="" @submit.prevent = "addItem">
+            <input type="text" v-model="newItem">
+            <button type="submit" :disabled = "newItem.length === 0">Add Item</button>
+        </form>
+
+        <ul>
+            <li v-for="(todo, index) in todos">
+                <input type="checkbox" v-model= "todo.completed">
+                <span v-bind:class= "{ 'done' : todo.completed}">
+                    {{ todo.title }}
+                </span>
+                <button @click="deleteItem(index)" v-if="todo.completed">Delete</button>
+            </li>
+        </ul>
+    </div>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                title: 'Todo List',
+                newItem: '',
+                todos: []
+            },
+            methods: {
+                getItem(){
+                    fetch('https://jsonplaceholder.typicode.com/todos?_limit=15')
+                    .then(response => response.json())
+                    .then(json => this.todos = json)
+
+                },
+                addItem(){
+                    let item = {
+                        title: this.newItem,
+                        completed: false
+                    }
+                    this.todos = [...this.todos, item]
+                    this.newItem = "";
+                },
+                deleteItem(index){
+                    this.todos.splice(index, 1);
+                }
+            },
+            computed: {
+                totalItem(){
+                    return this.todos.filter(function(todo){
+                        return todo.completed === false
+                    }).length;
+                }
+            },
+            created(){
+                this.getItem()
+            }
+        })
+    </script>
+</body>
+</html>

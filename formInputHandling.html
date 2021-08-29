@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Input Handling</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-on: == @ -->
+        <!-- <input type="text" v-model="newItem" @keyup.enter="todos.push(newItem)">
+        <button @click="todos.push(newItem)" type="submit">Add Item</button> -->
+
+        <h1>{{ title }}</h1>
+        <!-- <form action="" @submit.prevent = "todos.push(newItem)">
+            <input type="text" v-model="newItem" @keyup.enter="todos.push(newItem)">
+            <button type="submit">Add Item</button>
+        </form> -->
+
+        <form action="" @submit.prevent = "addItem">
+            <input type="text" v-model="newItem">
+            <button type="submit">Add Item</button>
+        </form>
+
+        <ul>
+            <li v-for="todo in todos">
+                {{ todo }}
+            </li>
+        </ul>
+    </div>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                title: 'Todo List',
+                newItem: '',
+                todos: ['Go shop', 'Buy egg']
+            },
+            methods: {
+                addItem(){
+                    // this.todos.push(this.newItem);
+                    this.todos = [...this.todos, this.newItem]
+                    this.newItem = "";
+                }
+            }
+        })
+    </script>
+</body>
+</html>

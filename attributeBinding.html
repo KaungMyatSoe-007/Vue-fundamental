@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attribute Binding</title>
+    <style>
+        ul{
+            list-style-type: none;
+        }
+        .done{
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- v-bind == : -->
+        <h1>{{ title }}</h1>
+        <form action="" @submit.prevent = "addItem">
+            <input type="text" v-model="newItem">
+            <button type="submit" :disabled = "newItem.length === 0">Add Item</button>
+        </form>
+
+        <ul>
+            <li v-for="(todo, index) in todos">
+                <input type="checkbox" v-model= "todo.complete">
+                <span v-bind:class= "todo.complete ? 'done' : ''">
+                    {{ todo.text }}
+                </span>
+                <button @click="deleteItem(index)">Delete</button>
+            </li>
+        </ul>
+    </div>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                title: 'Todo List',
+                newItem: '',
+                todos: [
+                    {text: 'Go Shop', complete: true},
+                    {text: 'Buy Egg', complete: false}
+                ]
+            },
+            methods: {
+                addItem(){
+                    let item = {
+                        text: this.newItem,
+                        complete: false
+                    }
+                    this.todos = [...this.todos, item]
+                    this.newItem = "";
+                },
+                deleteItem(index){
+                    this.todos.splice(index, 1);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

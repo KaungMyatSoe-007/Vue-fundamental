@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuejs</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ message }}</h1>
+        <b>{{ title }}</b>
+        <h1>{{1 + 2}}</h1>
+        <h1>{{true ? 'OK' : 'Not OK'}}</h1>
+        <ul>
+            <!-- <li>{{colors[0]}}</li> -->
+            <li v-for="color in colors">
+                {{color}}
+            </li>
+        </ul>
+
+        <ol>
+            <li>{{users[0].name}}</li>
+
+            <li v-for="user in users">
+                {{user.name}} live in {{user.address}}
+            </li>
+        </ol>
+    </div>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello vue',
+                title: 'Hello world',
+                colors: ['red', 'green', 'blue'],
+                users:[
+                    {name: "mg mg", address: "ygn"},
+                    {name: "aung aung", address: "mdy"},
+                    {name: "tun tun", address: "mgy"},
+                ]
+            }
+        })
+    </script>
+</body>
+</html>
